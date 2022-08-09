@@ -1,38 +1,32 @@
 /*
-Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.
+Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
 
-Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array nums. More formally, if there are k elements after removing the duplicates, then the first k elements of nums should hold the final result. It does not matter what you leave beyond the first k elements.
-
-Return k after placing the final result in the first k slots of nums.
-
-Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
+A subarray is a contiguous non-empty sequence of elements within an array.
 */
 
 /*Intution:
-				As the array is sorted so all the same elements are collected together...
-				
-				Use two pointer i from 0 and j from 1..
-				
-				if i==j that means both the ements are same so we have to ignore 
-				the elemnt i.e. we only increase the j pointer...
-				
-				and i pointer is increased only when i!=j...
-				
-				because the i will only have all the distinct elements before him...
+				we have to focus on the undesired subarray rather than the desired subarray...
+
+				because the desired subarray will always start from the begning, so it easy that way...
 */
 class Solution 
 {
-    public int removeDuplicates(int[] arr) 
+    public int subarraySum(int[] arr, int k) 
     {
-        int i=0;
-        for(int j=1;j<arr.length;++j)
+        HashMap<Integer,Integer> map=new HashMap<>();
+        map.put(0,1);
+        int ans=0;
+        int sum=0;
+        for(int i=0;i<arr.length;++i)
         {
-            if(arr[j]!=arr[i])
+            sum+=arr[i];
+            if(map.containsKey(sum-k))
             {
-                ++i;
-                arr[i]=arr[j];
+                ans=ans+(map.get(sum-k));
             }
+            map.put(sum,map.getOrDefault(sum,0)+1);
         }
-        return i+1;
+        
+        return ans;
     }
 }
