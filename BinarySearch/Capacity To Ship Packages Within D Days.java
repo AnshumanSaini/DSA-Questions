@@ -1,3 +1,4 @@
+/******************Binary search is used when we have a range of value and we have to find the a value within that range*************/
 /*
 A conveyor belt has packages that must be shipped from one port to another within days days.
 

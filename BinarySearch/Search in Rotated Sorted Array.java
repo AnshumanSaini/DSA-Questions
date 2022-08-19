@@ -1,3 +1,4 @@
+/******************Binary search is used when we have a range of value and we have to find the a value within that range*************/
 /*
 There is an integer array nums sorted in ascending order (with distinct values).
 
