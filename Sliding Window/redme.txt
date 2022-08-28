@@ -1,0 +1,3 @@
+case 1: IF WE HAVE TO CONSIDER ONLY ONE LETTER IN THE ARRAY/STRING..
+		
+		we should mai a pointer to store the occurence of that letter in the array/string...
