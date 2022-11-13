@@ -1,0 +1,2 @@
+String: 
+		split("\\s+") will split the string into string of array with separator as space or multiple spaces. \s+ is a regular expression for one or more spaces.
