@@ -18,10 +18,11 @@ class Solution
     public List<List<Integer>> findWinners(int[][] matches) 
     {
         TreeMap<Integer,Integer> map=new TreeMap<>();
-        
+        Set<Integer> set=new HashSet<>();
         for(int[] val : matches)
         {
             map.put(val[1],map.getOrDefault(val[1],0)+1);
+            set.add(val[0]);
         }
 
         List<Integer> l1=new ArrayList<>();
@@ -30,9 +31,9 @@ class Solution
             if(i.getValue()==1) l1.add(i.getKey());
         }
         List<Integer> l2=new ArrayList<>();
-        for(int[] val : matches)
+        for(Integer i : set)
         {
-            if(!map.containsKey(val[1])) l2.add(val[1]);
+            if(!map.containsKey(i)) l2.add(i);
         }
         List<List<Integer>> ans=new ArrayList<>();
         Collections.sort(l1);
