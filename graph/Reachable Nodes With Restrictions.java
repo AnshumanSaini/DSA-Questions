@@ -15,34 +15,49 @@ import java.util.*;
 class Solution 
 {
     int ans;
-    public void DFS(int[][] matrix, int ind, Set<Integer> set)
+    public void DFS(HashMap<Integer,Set<Integer>> map, int ind, Set<Integer> set)
     {
         if(set.contains(ind)) return;
         set.add(ind);
         ++ans;
-        for(int i=0;i<matrix[ind].length;++i)
+        for(Integer i : map.get(ind))
         {
-            if(matrix[ind][i]==1)
-            {
-                DFS(matrix, i, set);
-            }
+            DFS(map, i, set);
         }
+        
     }
     public int reachableNodes(int n, int[][] edges, int[] restricted) 
     {
-        int[][] matrix=new int[n][n];
-        
+        HashMap<Integer,Set<Integer>> map=new HashMap<>();
         for(int[] r : edges)
         {
-            matrix[r[0]][r[1]]=1;
-            matrix[r[1]][r[0]]=1;
+            if(map.containsKey(r[0]))
+            {
+                map.get(r[0]).add(r[1]);
+            }
+            else
+            {
+                Set<Integer> set=new HashSet<>();
+                set.add(r[1]);
+                map.put(r[0], set)
+            }
+            
+            if(map.containsKey(r[1]))
+            {
+                map.get(r[1]).add(r[0]);
+            }
+            else
+            {
+                Set<Integer> set=new HashSet<>();
+                set.add(r[0]);
+                map.put(r[1], set)
+            }
         }
-        
         Set<Integer> set=new HashSet<>();
 
         for(int i : restricted) set.add(i);
         ans=0;
-        DFS(matrix,0,set);
+        DFS(map, 0, set);
         return ans;
     }
 }
