@@ -1,3 +1,4 @@
+import java.util.*;
 /*
 Given an integer array nums, return the number of all the arithmetic subsequences of nums.
 
@@ -13,16 +14,31 @@ The test cases are generated so that the answer fits in 32-bit integer.
 
 class Solution 
 {
+    public int solve(int[] nums, int ind, int prev, int diff)
+    {
+        if(ind==nums.length) return 0;
+        
+        int take=0;
+        if((nums[ind]-prev)==diff) take=1+solve(nums,ind+1,nums[ind],diff);
+        int nottake=solve(nums,ind+1,prev,diff);
+
+        return take+nottake;
+    }
     public int numberOfArithmeticSlices(int[] nums) 
     {
         Arrays.sort(nums);
         int n=nums.length;
         if(n<3) return 0;
-
+        int sum=0;
         for(int i=0;i<n-2;++i)
         {
-            int diff=nums[i+1]-nums[i];
-            sum+=solve(nums,i+2,nums[i+1]);
+            for(int j=i+1;j<n-1;++j)
+            {
+                int diff=nums[j]-nums[i];
+                sum+=solve(nums,j+1,nums[j],diff);
+            }
         }
+        
+        return sum;
     }
 }

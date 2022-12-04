@@ -18,6 +18,7 @@ class Solution
 {
     public long totalCost(int[] costs, int k, int candidates) 
     {
+        //if(costs.length==1) return costs[0];
         PriorityQueue<Integer> pq1=new PriorityQueue<>();
         PriorityQueue<Integer> pq2=new PriorityQueue<>();
 
@@ -44,8 +45,8 @@ class Solution
                 pq2.add(costs[r]);
             }
         }
-        System.out.println(pq1);
-        System.out.println(pq2);
+        //System.out.println(pq1);
+        //System.out.println(pq2);
         long sum=0;
         while(k!=0)
         {
@@ -54,17 +55,27 @@ class Solution
                 sum+=pq1.peek();
                 if(l<=r)
                 {
-                    if(costs[l]<costs[r])
+                    int x=l;
+                    while(x<r && costs[x]==costs[n-x-1] && x<(l+(k-1))) ++x;
+                    
+                    if(costs[x]<costs[n-x-1]) 
                     {
+                        //System.out.println("1..........."+k);
                         pq1.poll();
                         pq1.add(costs[l++]);
                     }
-                    else
+                    else 
                     {
+                        //System.out.println("2.............."+k);
                         pq2.poll();
-                        pq2.add(costs[--r]);
+                        pq2.add(costs[r--]);
                     }
                 }
+                else
+                {
+                    pq1.poll();
+                }
+                
             }
             else
             {
@@ -85,9 +96,3 @@ class Solution
         return sum;
     }
 }
-
-/*
-[10,1,11,10]
-2
-1
- */
