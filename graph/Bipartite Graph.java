@@ -6,12 +6,42 @@ import java.util.*;
 
 class Solution
 {
+    
+    public boolean DFS(int[] arr, int V, ArrayList<ArrayList<Integer>> adj, int ind)
+    {
+        for(Integer i : adj.get(ind))
+        {
+            if(arr[i]==-1)
+            {
+                arr[i]=arr[ind]^1;
+                if(!DFS(arr,V,adj,i)) return false;
+            }
+            else
+            {
+                if(arr[i]==arr[ind]) return false;
+            }
+        }
+        
+        return true;
+    }
+    
     public boolean isBipartite(int V, ArrayList<ArrayList<Integer>>adj)
     {
         int[] arr=new int[V];
         Arrays.fill(arr, -1);
         
         for(int v=0;v<V;++v)
+        {
+            if(arr[v]==-1)
+            {
+                arr[v]=0;
+                if(!DFS(arr,V,adj,v)) return false;
+            }
+        }
+        
+        return true;
+        
+        /*for(int v=0;v<V;++v)
         {
             if(arr[v]==-1)
             {
@@ -41,5 +71,7 @@ class Solution
         }
         
         return true;
+        
+        */
     }
 }
