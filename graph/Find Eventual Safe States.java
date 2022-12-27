@@ -22,39 +22,50 @@ import java.util.*;
 
 class Solution 
 {
-    public boolean DFS(List<List<Integer>> adj, int V, int ind, boolean[] vis, boolean[] fvis)
+    public List<Integer> eventualSafeNodes(int[][] graph) 
     {
-        if(vis[ind]==true)
+        HashMap<Integer,List<Integer>> map=new HashMap<>();
+        int[] indegree=new int[graph.length];
+        for(int j=0;j<graph.length;++j)
         {
-            for(int i=0;i<V;++i)
+            indegree[j]=graph[j].length;
+            for(int i : graph[j])
             {
-                if(vis[i]==true) fvis[i]=true;
+                if(map.containsKey(i))
+                {
+                    map.get(i).add(j);
+                }
+                else
+                {
+                    List<Integer> list=new ArrayList<>();
+                    list.add(j);
+                    map.put(i,list);
+                }
             }
-
-            return false;
         }
 
-        vis[ind]=true;
-        for(Integer i : adj.get(ind))
+        Queue<Integer> q=new LinkedList<>();
+
+        for(int i=0;i<indegree.length;++i)
         {
-            if(!DFS(adj,V,i,vis,fvis)) return false;
+            if(indegree[i]==0) q.add(i);
         }
-        vis[ind]=false;
-        return true;
-    }
-
-    List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) 
-    {
         List<Integer> ans=new ArrayList<>();
-        boolean[] fvis=new boolean[V];
-
-        for(int i=0;i<V;++i)
+        while(!q.isEmpty())
         {
-            if(fvis[i]==true) continue;
-            boolean[] vis=new boolean[V];
-            if(DFS(adj,V,i,vis,fvis)) ans.add(i);
+            int hld=q.poll();
+            ans.add(hld);
+            if(!map.containsKey(hld)) continue;
+            for(Integer k : map.get(hld))
+            {
+                --indegree[k];
+                if(indegree[k]==0) q.add(k);
+            }
         }
+
+        Collections.sort(ans);
 
         return ans;
+
     }
 }
