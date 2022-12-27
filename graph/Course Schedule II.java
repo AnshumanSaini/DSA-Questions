@@ -24,3 +24,55 @@ in [a,b] the couse a is dependent on course b so,  we can say if there is a cycl
 so, we only have to check for the cyclic graph.
 */
 
+import java.util.*;
+
+class Solution 
+{
+    public int[] findOrder(int numCourses, int[][] pre) 
+    {
+        HashMap<Integer,List<Integer>> map=new HashMap<>();
+        int[] indegree=new int[numCourses];
+
+        for(int[] a : pre)
+        {
+            ++indegree[a[0]];
+            if(map.containsKey(a[1]))
+            {
+                map.get(a[1]).add(a[0]);
+            }
+            else
+            {
+                List<Integer> list=new ArrayList<>();
+                list.add(a[0]);
+                map.put(a[1],list);
+            }
+        }
+        Queue<Integer> q=new LinkedList<>();
+
+        int[] ans=new int[numCourses];
+        int k=0;
+        int cnt=0;
+        for(int i=0;i<numCourses;++i)
+        {
+            if(indegree[i]==0) q.add(i);
+        }
+        while(!q.isEmpty())
+        {
+            Integer hld=q.poll();
+            ans[k++]=hld;
+            ++cnt;
+            if(!map.containsKey(hld)) 
+            {
+                continue;
+            }
+            for(Integer i : map.get(hld))
+            {
+                --indegree[i];
+                if(indegree[i]==0) q.add(i);
+            }
+        }
+
+        if(cnt!=numCourses) return new int[0];
+        return ans;
+    }    
+}
