@@ -41,15 +41,10 @@ public class Maximizing_LCS
             String S=fr.nextLine();
 
             StringBuilder sb=new StringBuilder(S);
-            int ans=0;
-            for(int i=1;i<=(N);++i)
-            {
+            int ans=lcs(sb.toString(),sb.reverse().toString());
+            
 
-                //out.println(sb.substring(0,i)+"  "+sb1.reverse().toString());
-                ans=Math.max(ans,lcs(sb.substring(0,i),sb.reverse().substring(0,N-i)));
-            }
-
-            out.println(ans);
+            out.println(ans/2);
         }
         out.close();
     }
