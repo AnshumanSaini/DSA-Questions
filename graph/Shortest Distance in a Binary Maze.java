@@ -4,6 +4,10 @@ Given a n * m matrix grid where each element can either be 0 or 1. You need to f
 If the path is not possible between source cell and destination cell, then return -1.
 
 Note : You can move into an adjacent cell if that adjacent cell is filled with element 1. Two cells are adjacent if they share a side. In other words, you can move in one of the four directions, Up, Down, Left and Right.
+
+Note: 
+1. we will be using Queue insted of Priority Queue because all the four directions will be having same distance and the sorting will make no difference.
+2. Now once we get the destination coordinates we will stop,  because that will be the shortest distance.
 */
 
 import java.util.*;
