@@ -6,10 +6,10 @@ class DataStream
     int val;
     int max;
     int toRemove=-1;
-    Queue<Integer> q;
+    List<Integer> q;
     public DataStream(int value, int k) 
     {
-        q=new LinkedList<Integer>();
+        q=new ArrayList<Integer>();
         pq=new PriorityQueue<Integer>();
         this.val=value;
         this.max=k;
@@ -17,7 +17,7 @@ class DataStream
     
     public boolean consec(int num) 
     {
-        q.add(nums);
+        q.add(num);
         pq.add(num);
 
         if(q.size()>k)

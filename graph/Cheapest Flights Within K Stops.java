@@ -20,7 +20,7 @@ class Triple
     int stops;
     public Triple(int price, int node, int stops)
     {
-        this.price=price;
+        this.price=price; 
         this.node=node;
         this.stops=stops;
     }
